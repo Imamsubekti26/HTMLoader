@@ -1,0 +1,24 @@
+{
+  "name": "htmloader",
+  "version": "1.0.0",
+  "description": "lightweight and easy to use in-browser non-logical templating engine library for creating modular HTML",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "uglifyjs ./dist/htmloader.js -o ./dist/htmloader.min.js -c -m"
+  },
+  "keywords": [
+    "htmloader",
+    "templating engine",
+    "html modular",
+    "jquery"
+  ],
+  "author": "imamsubekti26",
+  "license": "MIT",
+  "dependencies": {
+    "uglify-js": "^3.17.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
