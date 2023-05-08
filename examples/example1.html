@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 1</title>
+  </head>
+  <body>
+    <p>
+      here I'll tell you how to load components automatically,
+      <b>check the code!!!</b>
+    </p>
+    <hr />
+
+    <div data-hl-load="greeting"></div>
+    <div data-hl-load="greeting"></div>
+
+    <!-- <div
+      data-hl-load="introducing"
+      data-hl-use='{"name" : "john patter"}'
+    ></div> -->
+
+    <!-- <div
+      data-hl-load="introducing"
+      data-hl-use='{"name" : "mikkey"}'
+      data-hl-override="false"
+    ></div> -->
+
+    <script src="../dist/htmloader.js"></script>
+    <script>
+      htmloader.useComponentIn("./components/");
+    </script>
+  </body>
+</html>
