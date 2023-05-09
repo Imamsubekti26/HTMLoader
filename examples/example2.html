@@ -23,21 +23,19 @@
 
     <script src="../dist/htmloader.js"></script>
     <script>
-      htmloader
-        .target("#replaceWithoutData")
-        .render("./components/greeting.html", true);
+      const hl = new HtmLoader();
+      hl.target("#replaceWithoutData").render(
+        "./components/greeting.html",
+        true
+      );
 
-      htmloader
-        .target("#appendWithoutData")
-        .render("./components/greeting.html");
+      hl.target("#appendWithoutData").render("./components/greeting.html");
 
-      htmloader
-        .target("#appendWithSingleData")
+      hl.target("#appendWithSingleData")
         .withData({ name: "John" })
         .render("./components/introducing.html");
 
-      htmloader
-        .target("#appendWitMultipleData")
+      hl.target("#appendWitMultipleData")
         .withData([
           { name: "Mikkey", age: 20 },
           { name: "Sarah", age: 19 },
