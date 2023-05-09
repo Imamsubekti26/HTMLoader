@@ -24,13 +24,7 @@ const htmloader = {
                 const data = JSON.parse(elements[i].getAttribute("data-hl-use"));
                 const isOverride = elements[i].getAttribute("data-hl-override") === "false" ? false : true;
                 this._target = elements[i];
-                this.withData(data).render(`${componentLocation}/${fileName}.html`, isOverride);
-                console.log(`target terkunci: `);
-                console.log(this._target);
-                console.log(`data didapatkan: `);
-                console.log(this._data);
-                // this._target = null;
-                this._data = [];
+                yield this.withData(data).render(`${componentLocation}/${fileName}.html`, isOverride);
             }
         });
     },
@@ -79,11 +73,13 @@ const htmloader = {
             for (let i = 0; i < this._data.length; i++) {
                 let componentWithData = yield this.injectDataToString(component, this._data[i]);
                 if (isOverride) {
-                    this._target.parentNode.replaceChild(yield this.convertStringtoNode(componentWithData), this._target);
+                    yield this._target.parentNode.replaceChild(yield this.convertStringtoNode(componentWithData), this._target);
+                    this.resetInit();
                     return 0;
                 }
-                this._target.append(yield this.convertStringtoNode(componentWithData));
-                // console.warn(`data sudah dibersihkan`);
+                yield this._target.append(yield this.convertStringtoNode(componentWithData));
+                if (i >= this._data.length)
+                    this.resetInit();
             }
         });
     },
@@ -114,5 +110,8 @@ const htmloader = {
             wrapper.innerHTML = textResult.trim();
             return wrapper.firstChild;
         });
+    },
+    resetInit: function () {
+        (this._data = []), (this._target = null);
     },
 };

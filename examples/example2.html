@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Example 1</title>
+    <title>Example 2: manual load</title>
   </head>
   <body>
     <p>
@@ -13,24 +13,35 @@
     </p>
     <hr />
 
-    <div id="foo"></div>
+    <div id="replaceWithoutData"></div>
 
-    <!-- <div
-      data-hl-load="introducing"
-      data-hl-use='{"name" : "john patter"}'
-    ></div>
+    <div id="appendWithoutData"></div>
 
-    <div
-      data-hl-load="introducing"
-      data-hl-use='{"name" : "mikkey"}'
-      data-hl-override="false"
-    ></div> -->
+    <div id="appendWithSingleData"></div>
+
+    <div id="appendWitMultipleData"></div>
 
     <script src="../dist/htmloader.js"></script>
     <script>
       htmloader
-        .target("#foo")
-        .withData([{ name: "john" }, { name: "mikkey" }])
+        .target("#replaceWithoutData")
+        .render("./components/greeting.html", true);
+
+      htmloader
+        .target("#appendWithoutData")
+        .render("./components/greeting.html");
+
+      htmloader
+        .target("#appendWithSingleData")
+        .withData({ name: "John" })
+        .render("./components/introducing.html");
+
+      htmloader
+        .target("#appendWitMultipleData")
+        .withData([
+          { name: "Mikkey", age: 20 },
+          { name: "Sarah", age: 19 },
+        ])
         .render("./components/introducing.html");
     </script>
   </body>

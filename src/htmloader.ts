@@ -5,6 +5,7 @@ interface htmloader_object {
   render(componentUri: string, isOverride?: boolean): Promise<void | 0>;
   injectDataToString(text: Promise<string>, data: object): Promise<string>;
   convertStringtoNode(text: Promise<string>): Promise<Node>;
+  resetInit(): void;
   _target: Node;
   _data: Array<object>;
 }
@@ -32,17 +33,10 @@ const htmloader: htmloader_object = {
 
       this._target = elements[i];
 
-      this.withData(data).render(
+      await this.withData(data).render(
         `${componentLocation}/${fileName}.html`,
         isOverride
       );
-      console.log(`target terkunci: `);
-      console.log(this._target);
-      console.log(`data didapatkan: `);
-      console.log(this._data);
-
-      // this._target = null;
-      this._data = [];
     }
   },
 
@@ -101,14 +95,17 @@ const htmloader: htmloader_object = {
         this._data[i]
       );
       if (isOverride) {
-        this._target.parentNode.replaceChild(
+        await this._target.parentNode.replaceChild(
           await this.convertStringtoNode(componentWithData),
           this._target
         );
+        this.resetInit();
         return 0;
       }
-      this._target.append(await this.convertStringtoNode(componentWithData));
-      // console.warn(`data sudah dibersihkan`);
+      await this._target.append(
+        await this.convertStringtoNode(componentWithData)
+      );
+      if (i >= this._data.length) this.resetInit();
     }
   },
 
@@ -139,5 +136,9 @@ const htmloader: htmloader_object = {
     const textResult = await text;
     wrapper.innerHTML = textResult.trim();
     return wrapper.firstChild;
+  },
+
+  resetInit: function (): void {
+    (this._data = []), (this._target = null);
   },
 };
